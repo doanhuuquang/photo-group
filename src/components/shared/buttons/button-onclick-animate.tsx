@@ -7,8 +7,8 @@ import { VariantProps } from "class-variance-authority";
 
 interface ButtonOnclickAnimateProps
   extends VariantProps<typeof buttonVariants> {
-  onClick: () => void;
-  children: React.ReactNode;
+  onClick?: () => void;
+  children?: React.ReactNode;
   className?: string;
 }
 
@@ -36,12 +36,12 @@ export default function ButtonOnclickAnimate({
       variant={variant}
       size={size}
       onClick={() => {
-        onClick();
+        onClick && onClick();
         setIsClicked(true);
       }}
       className={cn(
         className,
-        "relative overflow-hidden transition-transform",
+        "relative overflow-hidden transition-transform cursor-pointer",
         isClicked && "button-onclick-animate"
       )}
     >

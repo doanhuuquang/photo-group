@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import { Playwrite_DE_SAS, Manrope } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import AuthGate from "@/components/auth/auth-gate";
+import { Toaster } from "sonner";
 
 const playwriteDESAS = Playwrite_DE_SAS({
-  variable: "--font-geist-sans",
+  variable: "--font-playwrite-de-sas",
 });
 
 const manrope = Manrope({
@@ -25,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${manrope.className} ${playwriteDESAS.variable} antialiased`}
+        className={`${manrope.className} ${playwriteDESAS.variable} antialiased min-w-sm`}
       >
         <ThemeProvider
           attribute="class"
@@ -33,7 +35,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <AuthGate>
+            {children}
+            <Toaster />
+          </AuthGate>
         </ThemeProvider>
       </body>
     </html>

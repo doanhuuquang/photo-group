@@ -84,7 +84,6 @@ export default function SignupForm() {
         createdAt: new Date(),
         updatedAt: new Date(),
         isVerified: false,
-        isOnline: false,
       });
 
       // Tạo tài khoản và lưu thông tin người dùng Firebase Authentication

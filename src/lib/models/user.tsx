@@ -8,7 +8,6 @@ export class User {
   createdAt: Date;
   updatedAt: Date;
   isVerified: boolean;
-  isOnline: boolean;
 
   constructor({
     id,
@@ -20,7 +19,6 @@ export class User {
     createdAt,
     updatedAt,
     isVerified,
-    isOnline,
   }: {
     id: string;
     avatarBase64: string;
@@ -31,7 +29,6 @@ export class User {
     createdAt: Date;
     updatedAt: Date;
     isVerified: boolean;
-    isOnline: boolean;
   }) {
     this.id = id;
     this.avatarBase64 = avatarBase64;
@@ -42,7 +39,6 @@ export class User {
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.isVerified = isVerified;
-    this.isOnline = isOnline;
   }
 }
 

@@ -28,7 +28,6 @@ const createUser = async ({
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
     isVerified: user.isVerified,
-    isOnline: user.isOnline,
   });
 };
 

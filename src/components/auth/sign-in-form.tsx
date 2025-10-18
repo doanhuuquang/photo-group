@@ -23,17 +23,14 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
-// Firebase
 import { signInWithEmailAndPassword } from "firebase/auth";
 import auth from "@/lib/firebase/firebase-auth";
 import { FirebaseError } from "firebase/app";
 import { toast } from "sonner";
 
-// Style cho input
 const inputClassName =
   "px-5 py-7 bg-background/60 rounded-md text-foreground border-1 w-full outline-none focus:border-primary";
 
-// Form schema
 const formSchema = z.object({
   email: email("Vui lòng nhập địa chỉ email hợp lệ."),
   password: z.string().min(6, {
@@ -59,7 +56,6 @@ export default function SigninForm() {
 
       await signInWithEmailAndPassword(auth, value.email, value.password);
 
-      // Reset form after successful login
       form.reset();
 
       toast("Thành công", {
