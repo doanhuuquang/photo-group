@@ -33,8 +33,8 @@ export default function AppHeader() {
   const [isMenuMobileOpen, setIsMenuMobileOpen] = useState<boolean>(false);
 
   return (
-    <div className="w-full sticky top-0">
-      <div className="w-full lg:px-10 lg:py-4 p-4 bg-background z-50 flex items-center justify-between gap-10 relative">
+    <div className="w-full sticky top-0 z-100">
+      <div className="w-full lg:px-10 lg:py-4 p-4 bg-background z-100 flex items-center justify-between gap-10 relative">
         {/* Left */}
         <div className="w-full flex items-center gap-10">
           {/* Menu mobile triger*/}
