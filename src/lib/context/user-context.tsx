@@ -5,7 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { doc, onSnapshot } from "firebase/firestore";
 import auth from "@/lib/firebase/firebase-auth";
 import firestore from "@/lib/firebase/firebase-firestore-database";
-import User from "@/lib/models/user";
+import User from "@/lib/models/user/user";
 
 type UserContextType = {
   user: User | null;

@@ -25,7 +25,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import User from "@/lib/models/user";
+import User from "@/lib/models/user/user";
 import { createUser } from "@/lib/services/user-service";
 
 const inputClassName =

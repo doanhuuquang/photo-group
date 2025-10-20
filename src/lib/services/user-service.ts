@@ -2,7 +2,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc, collection, getDoc } from "firebase/firestore";
 import auth from "@/lib/firebase/firebase-auth";
 import firestore from "@/lib/firebase/firebase-firestore-database";
-import User from "@/lib/models/user";
+import User from "@/lib/models/user/user";
 
 const createUser = async ({
   email,
@@ -32,14 +32,24 @@ const createUser = async ({
 };
 
 const getUserById = async (userId: string): Promise<User | null> => {
-  const friendsRef = collection(firestore, "users");
-  const docSnap = await getDoc(doc(friendsRef, userId));
+  const userRef = doc(firestore, "users", userId);
+  const docSnap = await getDoc(userRef);
 
-  if (docSnap.exists()) {
-    return { id: docSnap.id, ...docSnap.data() } as User;
-  }
+  if (!docSnap.exists()) return null;
 
-  return null;
+  const data = docSnap.data();
+
+  return new User({
+    id: docSnap.id,
+    avatarBase64: data.avatarBase64,
+    firstName: data.firstName,
+    lastName: data.lastName,
+    email: data.email,
+    birthOfDate: data.birthOfDate,
+    createdAt: data.createdAt,
+    updatedAt: data.updatedAt,
+    isVerified: data.isVerified,
+  });
 };
 
 export { createUser, getUserById };

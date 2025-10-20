@@ -40,6 +40,10 @@ export class User {
     this.updatedAt = updatedAt;
     this.isVerified = isVerified;
   }
+
+  getFullName(): string {
+    return [this.lastName, this.firstName].join(" ");
+  }
 }
 
 export default User;
