@@ -6,8 +6,8 @@ export default async function UserPage({
   params: Promise<{ id: string }>;
 }) {
   return (
-    <div>
-      <PostList userId={(await params).id} />
+    <div className="w-full max-w-md m-auto">
+      <PostList userId={"jMs4PVQkTghcRgkHylWUZ0D0ZPB2"} />
     </div>
   );
 }

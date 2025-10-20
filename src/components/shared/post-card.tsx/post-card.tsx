@@ -1,15 +1,18 @@
 "use client";
 
+import ButtonOnclickAnimate from "@/components/shared/buttons/button-onclick-animate";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Post } from "@/lib/models/post/post";
 import User from "@/lib/models/user/user";
 import { getUserById } from "@/lib/services/user-service";
+import { cn } from "@/lib/utils";
 import {
   Ellipsis,
   EllipsisVertical,
   Flame,
   Heart,
+  Maximize,
   MessageSquare,
   Share,
   Share2,
@@ -17,6 +20,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { transform } from "zod";
 
 export default function PostCard({
   post,
@@ -26,6 +30,7 @@ export default function PostCard({
   className?: string;
 }) {
   const [author, setAuthor] = useState<User | null>(null);
+  const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -43,44 +48,78 @@ export default function PostCard({
   if (!author) return null;
 
   return (
-    <div className="w-full aspect-square bg-background dark:bg-muted/50">
-      <div className="flex items-center gap-4 p-4">
-        <Avatar className="w-12 h-12">
-          <AvatarImage
-            src={author.avatarBase64}
-            className="object-center object-cover"
-          />
-          <AvatarFallback>{author.firstName.charAt(0)}</AvatarFallback>
-        </Avatar>
-        <div className="full">
-          <p className="w-full text-lg font-semibold truncate">
-            {author.getFullName()}
-          </p>
-          <p className="text-xs text-muted-foreground">2 ngày trước</p>
+    <div className="w-full h-screen bg-background lg:p-6 ">
+      <div className="w-fit h-full bg-background m-auto relative lg:rounded-3xl group transition-shadow duration-300 ease-in-out">
+        <Image
+          src={post.imageUrls[0]}
+          alt="Post image"
+          width={1000}
+          height={1500}
+          className="h-full w-auto object-contain lg:rounded-3xl"
+        />
+
+        <div
+          className={cn(
+            "w-full h-full absolute z-4 bottom-0 left-0 flex flex-col justify-between gap-4 p-4 lg:rounded-3xl transition-colors duration-500 ease-in-out",
+            !isFullScreen
+              ? "bg-gradient-to-t from-background to-transparent"
+              : "bg-transparent"
+          )}
+        >
+          <ButtonOnclickAnimate
+            onClick={() => setIsFullScreen(!isFullScreen)}
+            size={"icon"}
+            className="absolute top-0 right-0 ml-auto rounded-full bg-black/50 hover:bg-black/70 text-white"
+          >
+            <Maximize />
+          </ButtonOnclickAnimate>
+
+          <div
+            className={cn(
+              "w-full max-w-lg mx-auto space-y-4 transition-opacity duration-500 ease-in-out",
+              isFullScreen ? "opacity-0" : "opacity-100"
+            )}
+          >
+            <p className="text-sm ">{post.content}</p>
+
+            <div className="w-full h-fit flex gap-4 justify-between ">
+              <Avatar className="w-12 h-12 mb-1">
+                <AvatarImage src={author.avatarBase64} />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+
+              <div className="text-center space-y-2">
+                <ButtonOnclickAnimate
+                  variant={"outline"}
+                  size={"icon-lg"}
+                  className="rounded-full"
+                >
+                  <Heart />
+                </ButtonOnclickAnimate>
+              </div>
+
+              <div className="text-center text-sm space-y-2">
+                <ButtonOnclickAnimate
+                  variant={"outline"}
+                  size={"icon-lg"}
+                  className="rounded-full"
+                >
+                  <MessageSquare />
+                </ButtonOnclickAnimate>
+              </div>
+
+              <div className="text-center text-sm space-y-2">
+                <ButtonOnclickAnimate
+                  variant={"outline"}
+                  size={"icon-lg"}
+                  className="rounded-full"
+                >
+                  <Share />
+                </ButtonOnclickAnimate>
+              </div>
+            </div>
+          </div>
         </div>
-        <Ellipsis size={15} className="ml-auto text-muted-foreground" />
-      </div>
-
-      <p className="px-4 pb-4">{post.content}</p>
-
-      <Image
-        src={post.imageUrls[0]}
-        alt="skjbdc"
-        width={1000}
-        height={1000}
-        className="w-full h-auto aspect-square object-center object-cover "
-      />
-
-      <div className="flex items-center gap-4 p-4">
-        <Button variant={"ghost"} className="grow">
-          <Heart className="text-primary" />
-        </Button>
-        <Button variant={"ghost"} className="grow">
-          <MessageSquare />
-        </Button>
-        <Button variant={"ghost"} className="grow">
-          <Share2 />
-        </Button>
       </div>
     </div>
   );
